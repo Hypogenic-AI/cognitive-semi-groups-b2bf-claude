@@ -1,0 +1,444 @@
+{
+  "semigroup_axioms": {
+    "closure": true,
+    "associativity": true,
+    "max_assoc_error": 0.0
+  },
+  "contractivity": {
+    "T_contract": {
+      "lipschitz_constant": 0.6966627521248207,
+      "contractive": "True",
+      "non_expansive": "True"
+    },
+    "T_nonexp": {
+      "lipschitz_constant": 1.0,
+      "contractive": "False",
+      "non_expansive": "True"
+    },
+    "T_expand": {
+      "lipschitz_constant": 1.5181205452631519,
+      "contractive": "False",
+      "non_expansive": "False"
+    },
+    "T_rotate": {
+      "lipschitz_constant": 0.9982767534996467,
+      "contractive": "True",
+      "non_expansive": "True"
+    },
+    "T_idempotent": {
+      "lipschitz_constant": 0.9616522645555259,
+      "contractive": "True",
+      "non_expansive": "True"
+    },
+    "T_nilpotent": {
+      "lipschitz_constant": 0.7328327037268197,
+      "contractive": "True",
+      "non_expansive": "True"
+    },
+    "T_nc1": {
+      "lipschitz_constant": 0.8907541287066865,
+      "contractive": "True",
+      "non_expansive": "True"
+    },
+    "T_nc2": {
+      "lipschitz_constant": 0.8255242437914511,
+      "contractive": "True",
+      "non_expansive": "True"
+    }
+  },
+  "convergence": {
+    "T_contract": {
+      "converged": true,
+      "convergence_iteration": 20,
+      "final_distance": 0.0,
+      "distances_sample": [
+        0.8449160158631216,
+        7.1366260780386725e-06,
+        7.25573624138762e-11,
+        7.266082793610021e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "T_nonexp": {
+      "converged": true,
+      "convergence_iteration": 0,
+      "final_distance": 0.0,
+      "distances_sample": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "T_expand": {
+      "converged": false,
+      "convergence_iteration": -1,
+      "final_distance": 156363490300.86685,
+      "distances_sample": [
+        0.768917334574738,
+        38.340619548567766,
+        1078.054666798521,
+        18783.926138509945,
+        252873.69952095952,
+        2910142.090603811,
+        30160259.815271907,
+        290065008.0211433,
+        2637899330.2953405,
+        22970334579.634296
+      ]
+    },
+    "T_rotate": {
+      "converged": false,
+      "convergence_iteration": -1,
+      "final_distance": 0.8201497426958257,
+      "distances_sample": [
+        0.9125828329946307,
+        0.8201498464190786,
+        0.8201497426959252,
+        0.8201497426958262,
+        0.8201497426958262,
+        0.8201497426958261,
+        0.8201497426958259,
+        0.8201497426958259,
+        0.8201497426958257,
+        0.8201497426958257
+      ]
+    },
+    "T_idempotent": {
+      "converged": true,
+      "convergence_iteration": 1,
+      "final_distance": 0.0,
+      "distances_sample": [
+        0.9559905398842128,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "T_nilpotent": {
+      "converged": true,
+      "convergence_iteration": 3,
+      "final_distance": 0.0,
+      "distances_sample": [
+        1.341690597642954,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "T_nc1": {
+      "converged": true,
+      "convergence_iteration": 33,
+      "final_distance": 0.0,
+      "distances_sample": [
+        0.8404320977582621,
+        0.0016944539847919952,
+        1.4581372811473315e-06,
+        5.274831810964646e-10,
+        1.3268116946030703e-13,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "T_nc2": {
+      "converged": true,
+      "convergence_iteration": 32,
+      "final_distance": 0.0,
+      "distances_sample": [
+        0.7445421471612406,
+        0.0016814716225769782,
+        1.3246508677128866e-06,
+        4.671760802591891e-10,
+        1.1605445360075963e-13,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "spectral": {
+    "T_contract": {
+      "spectral_radius": 1.0,
+      "converges_locally": "True"
+    },
+    "T_nonexp": {
+      "spectral_radius": 1.0,
+      "converges_locally": "True"
+    },
+    "T_expand": {
+      "spectral_radius": 1.2,
+      "converges_locally": "False"
+    },
+    "T_rotate": {
+      "spectral_radius": 1.0,
+      "converges_locally": "True"
+    },
+    "T_idempotent": {
+      "spectral_radius": 1.0,
+      "converges_locally": "True"
+    },
+    "T_nilpotent": {
+      "spectral_radius": 1.0,
+      "converges_locally": "True"
+    },
+    "T_nc1": {
+      "spectral_radius": 1.0,
+      "converges_locally": "True"
+    },
+    "T_nc2": {
+      "spectral_radius": 1.0,
+      "converges_locally": "True"
+    }
+  },
+  "fixed_points": {
+    "T_contract": {
+      "n_fixed_points": 50
+    },
+    "T_nonexp": {
+      "n_fixed_points": 50
+    },
+    "T_expand": {
+      "n_fixed_points": 0
+    },
+    "T_rotate": {
+      "n_fixed_points": 0
+    },
+    "T_idempotent": {
+      "n_fixed_points": 50
+    },
+    "T_nilpotent": {
+      "n_fixed_points": 50
+    },
+    "T_nc1": {
+      "n_fixed_points": 50
+    },
+    "T_nc2": {
+      "n_fixed_points": 50
+    }
+  },
+  "idempotents": {
+    "T_contract": {
+      "is_idempotent": "False",
+      "T2_T_distance": 0.24136987901778947
+    },
+    "T_nonexp": {
+      "is_idempotent": "True",
+      "T2_T_distance": 0.0
+    },
+    "T_expand": {
+      "is_idempotent": "False",
+      "T2_T_distance": 1.1936084196479928
+    },
+    "T_rotate": {
+      "is_idempotent": "False",
+      "T2_T_distance": 0.7920580281693959
+    },
+    "T_idempotent": {
+      "is_idempotent": "True",
+      "T2_T_distance": 0.0
+    },
+    "T_nilpotent": {
+      "is_idempotent": "False",
+      "T2_T_distance": 0.7030002662690331
+    },
+    "T_nc1": {
+      "is_idempotent": "False",
+      "T2_T_distance": 0.32288554706102807
+    },
+    "T_nc2": {
+      "is_idempotent": "False",
+      "T2_T_distance": 0.348767637789365
+    }
+  },
+  "commutativity": {
+    "T_contract,T_nonexp": {
+      "commute": true,
+      "max_difference": 0.0
+    },
+    "T_contract,T_expand": {
+      "commute": "False",
+      "max_difference": 0.24024394703794166
+    },
+    "T_contract,T_rotate": {
+      "commute": "False",
+      "max_difference": 0.01727160333346748
+    },
+    "T_contract,T_idempotent": {
+      "commute": "False",
+      "max_difference": 0.01583273841855927
+    },
+    "T_contract,T_nilpotent": {
+      "commute": "False",
+      "max_difference": 0.02158559808926631
+    },
+    "T_contract,T_nc1": {
+      "commute": "False",
+      "max_difference": 0.12825788473821498
+    },
+    "T_contract,T_nc2": {
+      "commute": "False",
+      "max_difference": 0.146190464288897
+    },
+    "T_nonexp,T_expand": {
+      "commute": true,
+      "max_difference": 0.0
+    },
+    "T_nonexp,T_rotate": {
+      "commute": true,
+      "max_difference": 0.0
+    },
+    "T_nonexp,T_idempotent": {
+      "commute": true,
+      "max_difference": 0.0
+    },
+    "T_nonexp,T_nilpotent": {
+      "commute": true,
+      "max_difference": 0.0
+    },
+    "T_nonexp,T_nc1": {
+      "commute": true,
+      "max_difference": 0.0
+    },
+    "T_nonexp,T_nc2": {
+      "commute": true,
+      "max_difference": 0.0
+    },
+    "T_expand,T_rotate": {
+      "commute": "False",
+      "max_difference": 0.20818293353931527
+    },
+    "T_expand,T_idempotent": {
+      "commute": "False",
+      "max_difference": 0.27982985008124867
+    },
+    "T_expand,T_nilpotent": {
+      "commute": "False",
+      "max_difference": 0.4037540377313891
+    },
+    "T_expand,T_nc1": {
+      "commute": "False",
+      "max_difference": 0.23399403710782823
+    },
+    "T_expand,T_nc2": {
+      "commute": "False",
+      "max_difference": 0.2835818185441058
+    },
+    "T_rotate,T_idempotent": {
+      "commute": "False",
+      "max_difference": 1.1443844596526291
+    },
+    "T_rotate,T_nilpotent": {
+      "commute": "False",
+      "max_difference": 0.7766110413639477
+    },
+    "T_rotate,T_nc1": {
+      "commute": "False",
+      "max_difference": 0.5300179482659938
+    },
+    "T_rotate,T_nc2": {
+      "commute": "False",
+      "max_difference": 0.44026854602478976
+    },
+    "T_idempotent,T_nilpotent": {
+      "commute": "False",
+      "max_difference": 0.5657681091519584
+    },
+    "T_idempotent,T_nc1": {
+      "commute": true,
+      "max_difference": 0.0
+    },
+    "T_idempotent,T_nc2": {
+      "commute": "False",
+      "max_difference": 0.17514216428400417
+    },
+    "T_nilpotent,T_nc1": {
+      "commute": "False",
+      "max_difference": 0.2875282003147469
+    },
+    "T_nilpotent,T_nc2": {
+      "commute": "False",
+      "max_difference": 0.3721962542611989
+    },
+    "T_nc1,T_nc2": {
+      "commute": "False",
+      "max_difference": 0.1173082707485494
+    }
+  },
+  "greens_relations": {
+    "n_elements": 13,
+    "n_idempotents": 3,
+    "n_L_classes": 13,
+    "n_R_classes": 13,
+    "n_J_classes": 8
+  },
+  "spectral_vs_rate": [
+    {
+      "name": "T_contract",
+      "spectral_radius": 1.0,
+      "empirical_rate": 0.3091413691157413
+    },
+    {
+      "name": "T_nonexp",
+      "spectral_radius": 1.0,
+      "empirical_rate": NaN
+    },
+    {
+      "name": "T_expand",
+      "spectral_radius": 1.2,
+      "empirical_rate": 1.446695330298381
+    },
+    {
+      "name": "T_rotate",
+      "spectral_radius": 1.0,
+      "empirical_rate": 0.9924452101612318
+    },
+    {
+      "name": "T_idempotent",
+      "spectral_radius": 1.0,
+      "empirical_rate": NaN
+    },
+    {
+      "name": "T_nilpotent",
+      "spectral_radius": 1.0,
+      "empirical_rate": NaN
+    },
+    {
+      "name": "T_nc1",
+      "spectral_radius": 1.0,
+      "empirical_rate": 0.5244887804243118
+    },
+    {
+      "name": "T_nc2",
+      "spectral_radius": 1.0,
+      "empirical_rate": 0.5225215095669068
+    }
+  ]
+}

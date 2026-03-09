@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "stages": {
+    "resource_finder": {
+      "success": true,
+      "completion_marker": "/workspaces/cognitive-semi-groups-b2bf-claude/.resource_finder_complete",
+      "outputs": {
+        "literature_review": "/workspaces/cognitive-semi-groups-b2bf-claude/literature_review.md",
+        "resources_catalog": "/workspaces/cognitive-semi-groups-b2bf-claude/resources.md",
+        "papers_dir": "/workspaces/cognitive-semi-groups-b2bf-claude/papers",
+        "code_dir": "/workspaces/cognitive-semi-groups-b2bf-claude/code"
+      },
+      "log_file": "/workspaces/cognitive-semi-groups-b2bf-claude/logs/resource_finder_claude.log",
+      "transcript_file": "/workspaces/cognitive-semi-groups-b2bf-claude/logs/resource_finder_claude_transcript.jsonl",
+      "elapsed_time": 1012.8907392024994
+    },
+    "experiment_runner": {
+      "success": true,
+      "return_code": 0,
+      "elapsed_time": 624.7690527439117,
+      "log_file": "/workspaces/cognitive-semi-groups-b2bf-claude/logs/execution_claude.log",
+      "transcript_file": "/workspaces/cognitive-semi-groups-b2bf-claude/logs/execution_claude_transcript.jsonl"
+    }
+  },
+  "work_dir": "/workspaces/cognitive-semi-groups-b2bf-claude"
+}

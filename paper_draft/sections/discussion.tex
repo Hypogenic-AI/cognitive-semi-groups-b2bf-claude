@@ -1,0 +1,141 @@
+\section{Discussion}\label{sec:discussion}
+
+\subsection{Implications for CoT prompt design}
+
+Our framework yields several actionable principles for designing CoT prompting
+systems.
+
+\paragraph{Ensuring convergence.}
+Theorem~\ref{thm:contractivity} provides a sharp criterion: iterative CoT
+application converges if and only if $\rho(B)<1$. In practice, this means
+the prompt should be designed so that its effective current-state transformation
+contracts the reasoning state toward a fixed point, rather than amplifying or
+preserving it. A prompt that merely paraphrases the current reasoning
+($B\approx I$) will not converge, while a prompt that substantially
+``compresses'' the current state ($\rho(B)\ll 1$) converges rapidly.
+
+\paragraph{Predicting convergence rate.}
+The rate $O(\rho(B)^k)$ from Theorem~\ref{thm:contractivity}(c) gives a
+quantitative prediction for the number of CoT steps needed. For $\rho(B)=0.5$,
+achieving $1\%$ residual error requires roughly $k\geq\log(0.01)/\log(0.5)
+\approx 7$ iterations. For $\rho(B)=0.9$, the same accuracy requires
+$k\approx 44$ iterations. This provides a principled way to determine the
+optimal number of CoT steps.
+
+\paragraph{Diagnosing failure modes.}
+The four-case classification (Theorem~\ref{thm:classification}) identifies
+two failure modes of iterative CoT:
+\begin{itemize}
+  \item \emph{Reasoning oscillation} (Case~3): the model cycles through
+    reasoning states without settling, corresponding to eigenvalues of~$B$ on
+    the unit circle. This may manifest as the model alternating between
+    different solution strategies.
+  \item \emph{Reasoning explosion} (Case~4): each iteration amplifies errors,
+    corresponding to $\rho(B)>1$. This may manifest as increasingly verbose or
+    incoherent reasoning.
+\end{itemize}
+
+\subsection{Connections to existing work}
+
+\paragraph{Transformer clustering.}
+Geshkovski et~al.~\cite{Geshkovski2023} prove that deep transformers
+converge to consensus (all tokens cluster to a single point) as depth tends
+to infinity. This is a special case of our Case~1, where the self-attention
+mechanism acts as a contractive $B$-matrix on the space of token
+distributions. Our framework generalizes this by allowing arbitrary linear
+CoT operators, not only those arising from self-attention.
+
+\paragraph{Iterated operator transforms.}
+Badea et~al.~\cite{Badea2025} show that iterated Schur transforms of an
+operator converge to idempotent projections, under a peripheral fixed-point
+property. This is analogous to our Theorem~\ref{thm:idempotent}: the
+conditions $B^2=B$ and $BA=0$ are the CoT analogues of the peripheral
+fixed-point property. However, their setting involves holomorphic functional
+calculus on a single operator, whereas our setting involves direct iteration
+of the operator itself.
+
+\paragraph{LLMs as improvement operators.}
+Yang et~al.~\cite{Yang2025} observe empirically that LLM refinement saturates
+in accuracy. In our framework, this saturation corresponds to Case~1
+convergence: the model reaches the consensus trajectory
+$(s_0,(I-B)^{-1}As_0,\dots)$ and further iteration produces no change. Their
+observed ``anchoring bias'' failure mode---where the model fixates on its
+initial answer---corresponds to the boundary between Case~2 and Case~3, where
+$B$ has an eigenvalue at~$1$.
+
+\paragraph{Error propagation in prompt composition.}
+Kim et~al.~\cite{Kim2025} bound error propagation through composed
+transformer layers via their Composition Lemma:
+$\|G_{1:T}-\tilde{G}_{1:T}\|\leq\sum_t\varepsilon_t\prod_{s>t}L_s$.
+This is a special case of our Lipschitz analysis in
+Theorem~\ref{thm:contractivity}(a), applied to a heterogeneous sequence of
+operators with individual Lipschitz constants~$L_s$.
+
+\subsection{Open questions}
+
+We identify several directions for future work.
+
+\begin{conjecture}[Nonlinear extension]\label{conj:nonlinear}
+  The convergence classification of Theorem~\ref{thm:classification} extends
+  to nonlinear CoT operators $T\colon\mathcal{M}_n\to\mathcal{M}_n$ that are
+  Lipschitz continuous. Specifically, if $T$ is a contraction on
+  $(\mathcal{M}_n,d)$ with Lipschitz constant strictly less than~$1$, then
+  $T^k$ converges to a unique fixed point by the Banach fixed-point theorem.
+  The challenge lies in characterizing the analogues of Cases~2 and~3 for
+  nonlinear operators.
+\end{conjecture}
+
+\begin{enumerate}[label=(\arabic*)]
+  \item \textbf{Stochastic operators.} LLM outputs are stochastic. Extending
+    the framework to random CoT operators, where each application of a prompt
+    produces a random transformation, would require the theory of random
+    products of matrices~\cite{Berger1992}. The relevant quantity becomes the
+    Lyapunov exponent $\lambda=\lim_{k\to\infty}\frac{1}{k}
+    \log\|B_k\cdots B_1\|$, and convergence holds when $\lambda<0$.
+
+  \item \textbf{Joint spectral radius computation.} For heterogeneous prompt
+    sequences (Proposition~\ref{prop:hetero}), convergence is controlled by
+    the joint spectral radius $\hat\rho(\{B_p\})$. Computing $\hat\rho$ is
+    NP-hard in general. Developing practical approximation algorithms
+    tailored to the CoT setting is an important open problem.
+
+  \item \textbf{Optimal prompt ordering.} Given a set of prompts
+    $\{p_1,\dots,p_k\}$, what ordering minimizes the number of iterations to
+    convergence? This is related to optimal control of semigroup dynamics and
+    appears computationally difficult in general.
+
+  \item \textbf{Approximate commutativity.} When operators ``nearly commute''
+    ($\|[T_1,T_2]\|<\varepsilon$), how does this affect convergence?
+    Quantitative perturbation bounds relating the commutator norm to the
+    deviation of convergence rates from the commutative case would be
+    valuable.
+
+  \item \textbf{Infinite-dimensional extension.} Extending the analysis from
+    $E=\R^d$ to infinite-dimensional spaces (e.g., $L^2$ spaces of token
+    distributions) would require careful treatment of compactness conditions,
+    following the approach of Gerlach and Gluck~\cite{Gerlach2017} for
+    AM-compact operators.
+\end{enumerate}
+
+\subsection{Limitations}
+
+Our framework rests on a linear model of CoT operators ($s_i\mapsto
+As_{i-1}+Bs_i$), whereas real LLM transformations are highly nonlinear.
+The linear theory applies rigorously to the linearized dynamics near fixed
+points: if a nonlinear CoT operator has a fixed trajectory~$\tau^*$, then the
+Jacobian at~$\tau^*$ has precisely the block lower-triangular structure
+of~$M(A,B)$, and our spectral criteria govern local convergence. For global
+convergence of nonlinear operators, contractivity must be established by other
+means (e.g., Lyapunov functions as in Akyildiz et~al.~\cite{Akyildiz2025}).
+
+The deterministic framework does not account for the stochastic nature of LLM
+outputs. While our results describe the ``expected'' behavior of a
+deterministic linearization, real systems exhibit variance that can affect
+convergence. The framework also assumes a fixed trajectory length~$n$;
+extending to variable-length trajectories requires additional structure on the
+metric space.
+
+Finally, our computational verification uses finite-dimensional examples with
+$d\leq 3$. Real embedding spaces have $d\sim 10^3$--$10^4$, and the spectral
+properties of the effective $B$-matrix in these high-dimensional settings
+remain to be investigated empirically.

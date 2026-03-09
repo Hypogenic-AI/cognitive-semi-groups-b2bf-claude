@@ -1,0 +1,77 @@
+\section{Introduction}\label{sec:intro}
+
+Chain-of-thought (CoT) prompting has emerged as a central technique for
+eliciting multi-step reasoning in large language models~\cite{Wei2022}. By
+instructing a model to produce intermediate reasoning steps before arriving at
+a final answer, CoT prompting substantially improves performance on arithmetic,
+commonsense, and symbolic reasoning tasks. Despite its empirical success,
+the mathematical structure underlying CoT prompt composition remains poorly
+understood. When multiple CoT prompts are applied in sequence---refining,
+extending, or correcting previous reasoning---fundamental questions arise: When
+does iterated prompting converge to a stable reasoning pattern? What algebraic
+structure governs the composition of prompts? How can one predict whether
+repeated application of a prompt will improve, degrade, or cycle through
+reasoning states?
+
+Recent work has begun to address these questions from several directions.
+Geshkovski et~al.~\cite{Geshkovski2023} model transformer layers as a
+one-parameter semigroup of flow maps on the space of probability measures over
+the unit sphere, proving that tokens cluster to a single point as depth tends
+to infinity. Kim et~al.~\cite{Kim2025} establish a universal approximation
+theorem for prompt-induced hypothesis classes, showing that a fixed transformer
+backbone can approximate any continuous function by varying only the prompt.
+Yang et~al.~\cite{Yang2025} model LLMs as improvement operators and observe
+empirically that iterative refinement saturates in accuracy. Badea
+et~al.~\cite{Badea2025} prove that iterated holomorphic operator transforms
+converge to idempotent projections under a peripheral fixed-point property. On
+the semigroup-theoretic side, Gluck and Haase~\cite{Gluck2018} develop the
+theory of the semigroup at infinity and the Jacobs--de~Leeuw--Glicksberg
+(JdLG) decomposition for bounded operator semigroups, while Gerlach and
+Gluck~\cite{Gerlach2017} establish convergence criteria for positive operator
+semigroups via AM-compactness.
+
+Despite this progress, no prior work constructs a semigroup-theoretic framework
+for CoT prompt composition or establishes formal algebraic criteria for
+convergence of iterated prompting. The present paper fills this gap.
+
+\subsection*{Contributions}
+We provide the first rigorous algebraic framework for CoT prompt composition as
+a semigroup of operators on a metric space of reasoning trajectories. Our main
+contributions are:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt,topsep=2pt]
+\item We define \emph{linear CoT operators} $T(A,B)$ on a trajectory space
+  $\mathcal{M}_n$ and prove that they form a monoid under composition, with an
+  explicit closed-form composition formula
+  (Theorem~\ref{thm:semigroup}).
+
+\item We establish a sharp contractivity criterion: iterates $T^n$ converge in
+  the strong operator topology if and only if the spectral radius
+  $\rho(B)<1$, with convergence rate $O(\rho(B)^n)$
+  (Theorem~\ref{thm:contractivity}).
+
+\item We characterize idempotent CoT operators as precisely those satisfying
+  $B^2=B$ and $BA=0$, and describe the fixed-point set explicitly
+  (Theorem~\ref{thm:idempotent}).
+
+\item We give a complete four-case classification of convergence
+  behavior---contractive, projective, oscillatory, and
+  divergent---determined by the spectrum of the current-state matrix~$B$
+  (Theorem~\ref{thm:classification}).
+
+\item We apply the JdLG decomposition to separate reasoning trajectories into
+  stable reasoning patterns and transient noise
+  (Theorem~\ref{thm:jdlg}).
+\end{itemize}
+
+All theoretical results are verified computationally on explicit
+finite-dimensional examples, confirming that the spectral radius $\rho(B)$
+accurately predicts convergence behavior.
+
+\subsection*{Organization}
+Section~\ref{sec:prelim} introduces notation, defines the trajectory space and
+CoT operators, and recalls prerequisite results from semigroup theory.
+Section~\ref{sec:main} contains our main theorems with complete proofs.
+Section~\ref{sec:discussion} discusses implications, connections to related
+work, and open questions. Section~\ref{sec:conclusion} summarizes our
+contributions.

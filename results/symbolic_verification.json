@@ -1,0 +1,33 @@
+{
+  "theorem1": {
+    "closure_verified": true,
+    "associativity": "follows from matrix multiplication",
+    "composition_formula": "A' = A2 + B2*A1, B' = B2*B1"
+  },
+  "theorem2": {
+    "lip_bound": "alpha + beta",
+    "refined_criterion": "rho(B) < 1",
+    "verified": true
+  },
+  "theorem3": {
+    "idempotent_conditions": [
+      "B\u00b2 = B (projection)",
+      "B*A = 0"
+    ],
+    "fixed_point_structure": "im(B) at each step",
+    "verified": true
+  },
+  "theorem4": {
+    "cases": 4,
+    "contractive_converges": true,
+    "projection_converges": true,
+    "rotation_oscillates": true,
+    "expansive_diverges": true
+  },
+  "theorem5": {
+    "decomposition_verified": true
+  },
+  "composition_formula": {
+    "formula_verified": true
+  }
+}

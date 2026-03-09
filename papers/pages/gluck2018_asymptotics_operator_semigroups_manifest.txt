@@ -1,0 +1,15 @@
+PDF: papers/gluck2018_asymptotics_operator_semigroups.pdf
+Total pages: 30
+Pages per chunk: 3
+
+Chunks:
+  gluck2018_asymptotics_operator_semigroups_chunk_001.pdf: pages 1-3
+  gluck2018_asymptotics_operator_semigroups_chunk_002.pdf: pages 4-6
+  gluck2018_asymptotics_operator_semigroups_chunk_003.pdf: pages 7-9
+  gluck2018_asymptotics_operator_semigroups_chunk_004.pdf: pages 10-12
+  gluck2018_asymptotics_operator_semigroups_chunk_005.pdf: pages 13-15
+  gluck2018_asymptotics_operator_semigroups_chunk_006.pdf: pages 16-18
+  gluck2018_asymptotics_operator_semigroups_chunk_007.pdf: pages 19-21
+  gluck2018_asymptotics_operator_semigroups_chunk_008.pdf: pages 22-24
+  gluck2018_asymptotics_operator_semigroups_chunk_009.pdf: pages 25-27
+  gluck2018_asymptotics_operator_semigroups_chunk_010.pdf: pages 28-30

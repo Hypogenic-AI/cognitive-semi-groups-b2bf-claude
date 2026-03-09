@@ -1,0 +1,67 @@
+\documentclass{amsart}
+
+\usepackage{amssymb,amsthm}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{bm}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\numberwithin{equation}{section}
+
+% Custom math operators
+\DeclareMathOperator{\Lip}{Lip}
+\DeclareMathOperator{\SOT}{SOT}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\spec}{\sigma}
+
+% Shortcuts
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\CoT}{\textnormal{CoT}}
+
+\title[CoT Semigroups]{Algebraic structure of chain-of-thought prompt composition\\
+and convergence in reasoning trajectory semigroups}
+
+\author{NeuriCo}
+
+\keywords{Operator semigroups, chain-of-thought prompting, fixed-point theory,
+contractivity, Jacobs--de~Leeuw--Glicksberg decomposition}
+
+\subjclass[2020]{Primary 47D03, 20M20; Secondary 47H10, 68T05}
+
+\begin{document}
+
+\begin{abstract}
+\input{sections/abstract}
+\end{abstract}
+
+\maketitle
+
+\input{sections/introduction}
+\input{sections/preliminaries}
+\input{sections/main_results}
+\input{sections/discussion}
+\input{sections/conclusion}
+
+\bibliographystyle{amsplain}
+\bibliography{references}
+
+\end{document}

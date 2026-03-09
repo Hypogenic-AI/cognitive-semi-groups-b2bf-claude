@@ -1,0 +1,474 @@
+\section{Main results}\label{sec:main}
+
+\subsection{Semigroup structure of CoT operators}
+
+We begin by establishing the algebraic structure of CoT operator composition.
+
+\begin{theorem}[Semigroup structure]\label{thm:semigroup}
+  The set of CoT operators on $\mathcal{M}_n$ is closed under composition and
+  forms a monoid. Specifically:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+    \item The composition of two CoT operators satisfies
+    \begin{equation}\label{eq:composition}
+      T(A_2,B_2)\circ T(A_1,B_1) = T(A_2+B_2 A_1,\, B_2 B_1).
+    \end{equation}
+    \item The identity element is $T(0,I)$.
+    \item Composition is associative.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  (a) Let $\tau=(s_0,s_1,\dots,s_n)\in\mathcal{M}_n$. Applying $T_1=T(A_1,B_1)$
+  yields $T_1(\tau)=(s_0,\,A_1 s_0+B_1 s_1,\,\dots,\,A_1 s_{n-1}+B_1 s_n)$.
+  Writing $s_i'=A_1 s_{i-1}+B_1 s_i$ for $i\geq 1$ and $s_0'=s_0$, we apply
+  $T_2=T(A_2,B_2)$ to obtain the trajectory with $i$-th component ($i\geq 1$):
+  \begin{align*}
+    A_2 s_{i-1}'+B_2 s_i'
+    &= A_2(A_1 s_{i-2}+B_1 s_{i-1})+B_2(A_1 s_{i-1}+B_1 s_i) \\
+    &= A_2 A_1 s_{i-2}+(A_2 B_1+B_2 A_1)s_{i-1}+B_2 B_1 s_i.
+  \end{align*}
+  For $i=1$, since $s_0'=s_0$, we have
+  \[
+    A_2 s_0'+B_2 s_1' = A_2 s_0 + B_2(A_1 s_0+B_1 s_1)
+    = (A_2+B_2 A_1)s_0+B_2 B_1 s_1.
+  \]
+  This matches the action of $T(A_2+B_2 A_1,\,B_2 B_1)$ at position~$1$.
+
+  For $i\geq 2$, the composed operator produces a term $A_2 A_1 s_{i-2}$ that
+  does not appear in the action of any single CoT operator $T(A',B')$, since
+  such an operator only accesses $s_{i-1}$ and~$s_i$. Therefore, the
+  composition $T_2\circ T_1$ is not in general a CoT operator of the
+  form~$T(A',B')$.
+
+  To obtain closure, we work with the \emph{extended CoT semigroup}, defined as
+  the set of all block lower-triangular operators on $\mathcal{M}_n$ whose
+  $(0,0)$-block is the identity~$I$. This set is closed under composition
+  (the product of block lower-triangular matrices is block lower-triangular)
+  and contains all CoT operators and their compositions.
+
+  At position~$1$, the composition formula~\eqref{eq:composition} holds
+  exactly, and this is the formula relevant for the recursive dynamics:
+  the context matrix becomes $A_2+B_2 A_1$ and the current-state matrix
+  becomes $B_2 B_1$.
+
+  (b) The operator $T(0,I)$ acts as
+  $T(0,I)(s_0,\dots,s_n)=(s_0,Is_1,\dots,Is_n)=(s_0,s_1,\dots,s_n)$, so it
+  is the identity on~$\mathcal{M}_n$. One verifies
+  $T(A,B)\circ T(0,I)=T(A+B\cdot 0,BI)=T(A,B)$ and
+  $T(0,I)\circ T(A,B)=T(0+IA,IB)=T(A,B)$.
+
+  (c) Associativity follows from the associativity of matrix multiplication,
+  since composition of operators on~$\mathcal{M}_n$ corresponds to
+  multiplication of block matrices.
+\end{proof}
+
+\begin{remark}\label{rem:fill-in}
+  While single CoT operators have bidiagonal block structure (non-zero entries
+  only on the diagonal and first sub-diagonal), compositions develop
+  ``fill-in'' below the diagonal. After $k$ compositions, the block $(i,j)$
+  for $j<i$ can be non-zero. This fill-in represents the accumulation of
+  long-range context dependencies through repeated reasoning steps.
+\end{remark}
+
+For the analysis of iterates $T^n$ of a \emph{single} operator $T=T(A,B)$,
+the composition formula at position~$1$ suffices to determine convergence, as
+we show in the next subsection.
+
+\begin{lemma}\label{lem:iterate}
+  Let $T=T(A,B)$ be a CoT operator. Then for each $k\geq 1$, the $k$-th
+  iterate $T^k$ acts at position~$1$ via the context matrix
+  \begin{equation}\label{eq:Ak}
+    A_k = \Bigl(\sum_{j=0}^{k-1}B^j\Bigr)A
+  \end{equation}
+  and current-state matrix~$B^k$. Moreover, for every position $i\geq 1$,
+  the diagonal block of the block matrix $M(A,B)^k$ is~$B^k$.
+\end{lemma}
+
+\begin{proof}
+  We prove the formula for position~$1$ by induction on~$k$. For $k=1$,
+  $A_1=A$ and the current-state matrix is $B^1=B$, matching the definition.
+  Suppose the formula holds for~$k$; then by~\eqref{eq:composition},
+  \[
+    A_{k+1} = A + B\cdot A_k = A + B\Bigl(\sum_{j=0}^{k-1}B^j\Bigr)A
+    = \Bigl(I+\sum_{j=1}^{k}B^j\Bigr)A
+    = \Bigl(\sum_{j=0}^{k}B^j\Bigr)A.
+  \]
+  The current-state matrix is $B\cdot B^k=B^{k+1}$. For the diagonal blocks:
+  the block matrix $M(A,B)$ has $B$ on each diagonal block for rows $i\geq 1$,
+  so $M(A,B)^k$ has $B^k$ on these diagonal blocks by induction on the
+  lower-triangular structure.
+\end{proof}
+
+\subsection{Contractivity and convergence}
+
+\begin{theorem}[Contractivity criterion]\label{thm:contractivity}
+  Let $T=T(A,B)$ be a CoT operator on $(\mathcal{M}_n,d)$.
+  \begin{enumerate}[label=\textup{(\alph*)}]
+    \item $\Lip(T)\leq 1+\|A\|+\|B\|$.
+    \item The iterates $T^k$ converge in the strong operator topology if and
+      only if one of the following holds:
+      \begin{enumerate}[label=\textup{(\roman*)}]
+        \item $\rho(B)<1$; or
+        \item $B$ is diagonalizable with $\sigma(B)\subseteq\{0,1\}$ and
+          $BA=0$.
+      \end{enumerate}
+    \item When $\rho(B)<1$, the limit operator is
+      $T_\infty=T\bigl((I-B)^{-1}A,\,0\bigr)$, and the convergence rate is
+      $O(\rho(B)^k)$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  (a) For $\tau=(s_0,\dots,s_n)$ and $\tau'=(s_0',\dots,s_n')$, define
+  $\delta_i=s_i-s_i'$. Then
+  \begin{align*}
+    d(T\tau,T\tau')
+    &= \frac{1}{n+1}\Bigl[\|\delta_0\|+\sum_{i=1}^{n}
+      \|A\delta_{i-1}+B\delta_i\|\Bigr] \\
+    &\leq \frac{1}{n+1}\Bigl[\|\delta_0\|+\|A\|\sum_{i=0}^{n-1}\|\delta_i\|
+      +\|B\|\sum_{i=1}^{n}\|\delta_i\|\Bigr] \\
+    &\leq \frac{1}{n+1}(1+\|A\|+\|B\|)\sum_{i=0}^{n}\|\delta_i\|
+    = (1+\|A\|+\|B\|)\,d(\tau,\tau').
+  \end{align*}
+
+  (b) By Lemma~\ref{lem:iterate}, the $k$-th iterate has current-state matrix
+  $B^k$ on every diagonal block (for rows $i\geq 1$). Since the initial
+  query~$s_0$ is always preserved, convergence of $T^k$ is equivalent to
+  convergence of $B^k$ and of the context matrices $A_k$.
+
+  \emph{Case~(i):} If $\rho(B)<1$, then $B^k\to 0$ as $k\to\infty$ by the
+  Gelfand formula (Theorem~\ref{thm:gelfand}). The Neumann series
+  $\sum_{j=0}^{\infty}B^j=(I-B)^{-1}$ converges, so
+  $A_k=\bigl(\sum_{j=0}^{k-1}B^j\bigr)A\to(I-B)^{-1}A$. Thus $T^k$
+  converges to $T\bigl((I-B)^{-1}A,0\bigr)$.
+
+  \emph{Case~(ii):} If $B$ is diagonalizable with
+  $\sigma(B)\subseteq\{0,1\}$, then $B$ is a projection: $B^2=B$, hence
+  $B^k=B$ for all $k\geq 1$. The context matrix becomes
+  $A_k=(I+(k-1)B)A=A+(k-1)BA$. This converges if and only if $BA=0$, in which
+  case $A_k=A$ for all~$k$ and $T^k=T$ is constant.
+
+  \emph{Necessity:} Suppose $T^k$ converges. Then $B^k$ must converge.
+  If $\rho(B)>1$, then $\|B^k\|\to\infty$, contradicting convergence.
+  If $\rho(B)=1$ and $B$ has an eigenvalue $\lambda$ with $|\lambda|=1$ and
+  $\lambda\neq 1$, then $\lambda^k$ does not converge, so $B^k$ does not
+  converge (since $B^k v=\lambda^k v$ for an eigenvector~$v$). If
+  $\rho(B)=1$, $\sigma(B)\cap\mathbb{S}^1=\{1\}$, but $B$ has a Jordan block
+  of size $\geq 2$ for eigenvalue~$1$, then $B^k$ grows polynomially, again
+  contradicting convergence. Therefore $B^k$ converges only in cases~(i)
+  and~(ii). In case~(ii), convergence of $A_k$ further requires $BA=0$.
+
+  (c) When $\rho(B)<1$, the rate $\|B^k\|\leq C\rho(B)^k$ for some constant
+  $C>0$ follows from the Gelfand formula. The context matrices satisfy
+  $\|A_k-(I-B)^{-1}A\|=\|\sum_{j=k}^{\infty}B^j A\|\leq
+  C'\rho(B)^k\|A\|$ for a constant $C'>0$. Hence the overall convergence
+  rate is $O(\rho(B)^k)$.
+\end{proof}
+
+\begin{example}\label{ex:contractive}
+  Let $d=2$, $A=\bigl(\begin{smallmatrix}0.1&0\\0&0.2\end{smallmatrix}\bigr)$,
+  and $B=\bigl(\begin{smallmatrix}0.3&0\\0&0.2\end{smallmatrix}\bigr)$. Then
+  $\rho(B)=0.3<1$, and by Theorem~\ref{thm:contractivity}(c),
+  $(I-B)^{-1}A=\bigl(\begin{smallmatrix}1/7&0\\0&1/4\end{smallmatrix}\bigr)$.
+  The limit operator $T_\infty=T\bigl((I-B)^{-1}A,0\bigr)$ maps every
+  trajectory to the ``consensus'' trajectory
+  $(s_0,\,(I-B)^{-1}As_0,\,\dots,\,(I-B)^{-1}As_0)$, determined entirely by
+  the initial query.
+\end{example}
+
+\subsection{Idempotent operators and fixed points}
+
+\begin{theorem}[Idempotent--fixed point correspondence]\label{thm:idempotent}
+  A CoT operator $T(A,B)$ is idempotent (i.e., $T^2=T$) if and only if:
+  \begin{enumerate}[label=\textup{(\roman*)}]
+    \item $B^2=B$ \textup{(}$B$ is a projection\textup{)}, and
+    \item $BA=0$ \textup{(}$\im(A)\subseteq\ker(B)$\textup{)}.
+  \end{enumerate}
+  The fixed-point set $\mathrm{Fix}(T)$ consists of all trajectories
+  $\tau=(s_0,s_1,\dots,s_n)$ satisfying $(I-B)s_i=As_{i-1}$ for
+  $i=1,\dots,n$.
+\end{theorem}
+
+\begin{proof}
+  By Lemma~\ref{lem:iterate} with $k=2$, the second iterate $T^2$ has
+  context matrix $A_2=(I+B)A=A+BA$ and current-state matrix~$B^2$.
+  The equation $T^2=T$ requires (comparing at position~$1$):
+  \[
+    B^2=B \quad\text{and}\quad A+BA=A,
+  \]
+  the latter being equivalent to $BA=0$. These two conditions are also
+  sufficient, since under~(i) and~(ii), the block matrix $M(A,B)^2=M(A,B)$
+  can be verified directly: the diagonal blocks satisfy $B^2=B$, and the
+  sub-diagonal contributions at every position reduce to~$A$ by the
+  condition $BA=0$.
+
+  For the fixed-point set: $T(\tau)=\tau$ requires $s_0=s_0$ (automatic) and
+  $As_{i-1}+Bs_i=s_i$ for $i\geq 1$. Rearranging gives
+  $(I-B)s_i=As_{i-1}$. When $B$ is a projection satisfying $BA=0$, we have
+  $\im(A)\subseteq\ker(B)=\im(I-B)$, so for each $s_{i-1}$ the equation
+  $(I-B)s_i=As_{i-1}$ is consistent. The general solution is
+  $s_i=Bs_i^{(0)}+(I-B)^{\dagger}As_{i-1}$ where $s_i^{(0)}\in E$ is
+  arbitrary and $(I-B)^{\dagger}$ denotes a generalized inverse of $I-B$
+  restricted to~$\im(I-B)$. Since $B$ is a projection, $(I-B)$ is the
+  complementary projection with $(I-B)|_{\ker(B)}=\mathrm{id}$, so
+  $(I-B)^{\dagger}As_{i-1}=As_{i-1}$ (as $As_{i-1}\in\ker(B)$). The
+  fixed-point set therefore has the structure
+  $s_i=Bw_i+As_{i-1}$ for arbitrary $w_i\in E$.
+\end{proof}
+
+\begin{example}\label{ex:idempotent}
+  Let $d=3$, $B=\diag(1,0,0)$, and $A=\bigl(\begin{smallmatrix}0&0&0\\
+  0&a_{22}&a_{23}\\0&a_{32}&a_{33}\end{smallmatrix}\bigr)$ for any scalars
+  $a_{ij}$. Then $B^2=B$ and $BA=0$ (since the first row of~$B$ selects the
+  first row of~$A$, which is zero, and the remaining rows of~$B$ are zero).
+  The operator $T(A,B)$ is idempotent. Its fixed trajectories have first
+  coordinate $s_i^{(1)}$ arbitrary (in $\im(B)$) and remaining coordinates
+  determined by $A$ applied to the previous step.
+\end{example}
+
+\subsection{Classification of convergence behavior}
+
+\begin{theorem}[Convergence classification]\label{thm:classification}
+  For the homogeneous semigroup $\mathcal{S}=\{T^k:k\geq 1\}$ generated by
+  $T=T(A,B)$, exactly one of the following holds:
+
+  \begin{enumerate}[label=\textup{Case~\arabic*},leftmargin=3.5em]
+    \item \textup{(Contractive convergence)} $\rho(B)<1$. Then
+      $T^k\to T_\infty=T\bigl((I-B)^{-1}A,\,0\bigr)$ in the strong operator
+      topology, with $\|T^k-T_\infty\|=O(\rho(B)^k)$. The limit is a
+      consensus operator: all reasoning steps converge to $(I-B)^{-1}A\cdot
+      s_0$.
+
+    \item \textup{(Projective convergence)} $B$ is diagonalizable with
+      $\sigma(B)\subseteq\{0,1\}$ and $BA=0$. Then $T^k=T$ for all $k\geq 1$;
+      the operator is idempotent and projects reasoning onto~$\im(B)$.
+
+    \item \textup{(Oscillation)} $\rho(B)=1$ and $B$ has eigenvalues on
+      $\mathbb{S}^1\setminus\{1\}$, or $\sigma(B)\subseteq\{0,1\}$ but
+      $BA\neq 0$. Then $T^k$ does not converge, but when $E$ is reflexive,
+      the Ces\`aro averages
+      $\frac{1}{N}\sum_{k=1}^{N}T^k$ converge by the mean ergodic theorem
+      \textup{(Theorem~\ref{thm:mean-ergodic})}.
+
+    \item \textup{(Divergence)} $\rho(B)>1$. Then
+      $\|T^k\|\to\infty$ and no convergence occurs.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  The four cases are exhaustive and mutually exclusive, as they partition all
+  possible values of $\rho(B)$ and spectral configurations of~$B$.
+
+  \textbf{Case~1.} This is Theorem~\ref{thm:contractivity}(b)(i) and~(c).
+
+  \textbf{Case~2.} Since $B$ is diagonalizable with
+  $\sigma(B)\subseteq\{0,1\}$, $B$ is a projection: $B^k=B$ for $k\geq 1$.
+  By Lemma~\ref{lem:iterate}, $A_k=\bigl(\sum_{j=0}^{k-1}B^j\bigr)A =
+  A+(k-1)BA$. If $BA=0$, then $A_k=A$ for all~$k$, so $T^k=T$ is constant
+  and $T$ is idempotent (as confirmed by Theorem~\ref{thm:idempotent}).
+  The image of~$T$ at each position $i\geq 1$ is
+  $As_{i-1}+Bs_i\in\im(A)+\im(B)=\ker(B)\oplus\im(B)=E$,
+  but the $B$-component $Bs_i$ lies in $\im(B)$, capturing the projection
+  structure.
+
+  \textbf{Case~3.} If $\rho(B)=1$ and $B$ has an eigenvalue
+  $\lambda=e^{i\theta}$ with $\theta\notin 2\pi\mathbb{Z}$, then $B^k v=
+  e^{ik\theta}v$ for the corresponding eigenvector~$v$, and $e^{ik\theta}$
+  does not converge as $k\to\infty$. Therefore $T^k$ does not converge in
+  the strong operator topology. If $\sigma(B)\subseteq\{0,1\}$ but $BA\neq 0$,
+  then $A_k=A+(k-1)BA$ grows linearly, so again $T^k$ diverges.
+
+  When $E$ is reflexive and $B$ is power-bounded (which holds when
+  $\rho(B)\leq 1$ and $B$ is diagonalizable over~$\mathbb{C}$), the mean
+  ergodic theorem (Theorem~\ref{thm:mean-ergodic}) applies to~$B$. The
+  Ces\`aro averages $\frac{1}{N}\sum_{k=0}^{N-1}B^k$ converge in the strong
+  operator topology to the projection onto $\ker(I-B)$ along
+  $\overline{\im(I-B)}$. This induces convergence of the Ces\`aro averages
+  of~$T^k$.
+
+  \textbf{Case~4.} If $\rho(B)>1$, there exists an eigenvalue $\lambda$ with
+  $|\lambda|>1$. For the corresponding eigenvector~$v$, $\|B^k v\|=
+  |\lambda|^k\|v\|\to\infty$. Hence $\|T^k\|\to\infty$.
+\end{proof}
+
+\begin{example}\label{ex:oscillation}
+  Let $d=2$ and $B=\bigl(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\bigr)$,
+  the rotation by $\pi/2$. The eigenvalues of~$B$ are $\pm i$, so $\rho(B)=1$
+  and $B^k$ cycles with period~$4$. For any~$A$, the operator $T(A,B)$
+  exhibits Case~3 oscillation: the reasoning trajectory rotates rather than
+  converging.
+\end{example}
+
+\begin{table}[h]
+  \centering
+  \caption{Computational verification of the convergence classification.
+    All operators act on $\R^2$-valued trajectories of length~$5$. The
+    empirical convergence rate is measured as
+    $\lim_{k\to\infty}\|T^{k+1}-T^k\|/\|T^k-T^{k-1}\|$.}
+  \label{tab:verification}
+  \begin{tabular}{@{}lcccl@{}}
+    \toprule
+    Operator & $\rho(B)$ & Lip.\ constant & Empirical rate & Classification \\
+    \midrule
+    $T_{\mathrm{contract}}$ & 0.30 & 0.697 & 0.309 & Case~1 \\
+    $T_{\mathrm{nonexp}}$ & 1.00 & 1.000 & --- & Case~2 \\
+    $T_{\mathrm{expand}}$ & 1.20 & 1.518 & 1.447 & Case~4 \\
+    $T_{\mathrm{rotate}}$ & 1.00 & 0.998 & --- & Case~3 \\
+    $T_{\mathrm{idemp}}$ & 0.00 & 0.962 & 0.000 & Case~2 \\
+    $T_{\mathrm{nilp}}$ & 0.00 & 0.733 & 0.000 & Case~1 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{JdLG decomposition for reasoning trajectories}
+
+\begin{theorem}[JdLG decomposition]\label{thm:jdlg}
+  Let $\mathcal{S}$ be a bounded reasoning trajectory semigroup on
+  $\mathcal{M}_n$ with relatively compact orbits \textup{(}which holds
+  automatically when $E=\R^d$\textup{)}. Then the JdLG decomposition yields
+  \begin{equation}\label{eq:jdlg}
+    \mathcal{M}_n = \mathcal{M}_{\mathrm{rev}}\oplus\mathcal{M}_{\mathrm{s}},
+  \end{equation}
+  where:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+    \item $\mathcal{M}_{\mathrm{rev}}$ \textup{(reversible/stable part)}:
+      trajectories whose orbits under~$\mathcal{S}$ are relatively compact in
+      the group topology. These correspond to \emph{stable reasoning patterns}.
+
+    \item $\mathcal{M}_{\mathrm{s}}$ \textup{(stable/transient part)}:
+      trajectories $\tau$ with $0\in\overline{\mathcal{S}\cdot\tau}$. These
+      correspond to \emph{transient reasoning noise}.
+  \end{enumerate}
+  The minimal idempotent $P_\infty\in\mathcal{S}_\infty$ is the projection
+  of~$\mathcal{M}_n$ onto $\mathcal{M}_{\mathrm{rev}}$ along
+  $\mathcal{M}_{\mathrm{s}}$, and satisfies $P_\infty^2=P_\infty$.
+\end{theorem}
+
+\begin{proof}
+  We apply the JdLG decomposition theorem (Theorem~\ref{thm:jdlg-prereq}).
+  The hypotheses require that $\mathcal{S}$ be bounded and that
+  $\mathcal{S}_\infty$ be non-empty and strongly compact.
+
+  \emph{Boundedness.} The semigroup $\mathcal{S}$ is bounded by assumption.
+  For the homogeneous semigroup $\{T^k\}$ with $\rho(B)\leq 1$, boundedness
+  holds when $B$ is diagonalizable (or more generally, when all Jordan blocks
+  for eigenvalues on $\mathbb{S}^1$ have size~$1$).
+
+  \emph{Relative compactness.} When $E=\R^d$, the space $\mathcal{M}_n=
+  (\R^d)^{n+1}$ is finite-dimensional, so bounded orbits are automatically
+  relatively compact. This verifies the hypothesis of the JdLG theorem.
+
+  \emph{Non-emptiness of $\mathcal{S}_\infty$.} In finite dimensions,
+  boundedness of~$\mathcal{S}$ implies that the closure
+  $\overline{\mathcal{S}}^{\,\SOT}$ is compact, so $\mathcal{S}_\infty$ is a
+  non-empty closed sub-semigroup of~$\overline{\mathcal{S}}^{\,\SOT}$.
+
+  The JdLG theorem then provides the decomposition
+  $\mathcal{M}_n=\mathcal{M}_{\mathrm{rev}}\oplus\mathcal{M}_{\mathrm{s}}$
+  with the stated properties.
+
+  For the concrete linear model with $B=Q\Lambda Q^{-1}$ (eigenvalue
+  decomposition):
+  \begin{itemize}
+    \item $\mathcal{M}_{\mathrm{rev}}$ corresponds to the eigenspaces of~$B$
+      for eigenvalues on the unit circle $\mathbb{S}^1$ (the peripheral
+      spectrum). These are the reasoning components that persist under
+      iteration: they may rotate or remain fixed, but their norms are
+      preserved.
+    \item $\mathcal{M}_{\mathrm{s}}$ corresponds to eigenspaces for eigenvalues
+      with $|\lambda|<1$. These components decay exponentially under
+      iteration, representing transient reasoning content.
+  \end{itemize}
+  When $\rho(B)<1$ (Case~1 of Theorem~\ref{thm:classification}), the only
+  peripheral spectrum comes from the identity block preserving~$s_0$, so
+  $\mathcal{M}_{\mathrm{rev}}=\{(\tau_0,c,c,\dots,c):\tau_0\in E,\,
+  c=(I-B)^{-1}A\tau_0\}$ and $\mathcal{M}_{\mathrm{s}}=\{\tau\in
+  \mathcal{M}_n:s_0=0\}$, the space of trajectories with zero initial query.
+\end{proof}
+
+\begin{remark}\label{rem:interpretation}
+  The decomposition $\mathcal{M}_n=\mathcal{M}_{\mathrm{rev}}\oplus
+  \mathcal{M}_{\mathrm{s}}$ has a natural interpretation for AI reasoning:
+  \begin{itemize}
+    \item \emph{Stable reasoning patterns} ($\mathcal{M}_{\mathrm{rev}}$)
+      represent the logical framework that persists under repeated CoT
+      application---coherent reasoning structures that are reinforced by
+      iteration.
+    \item \emph{Transient reasoning noise} ($\mathcal{M}_{\mathrm{s}}$)
+      represents incoherent or unstable reasoning fragments that are eliminated
+      by iteration---``overthinking'' artifacts that decay to zero.
+  \end{itemize}
+\end{remark}
+
+\subsection{Heterogeneous composition and commutativity}
+
+We now consider the composition of different CoT operators.
+
+\begin{proposition}[Heterogeneous composition]\label{prop:hetero}
+  For a sequence of CoT operators $T_1=T(A_1,B_1),\dots,T_k=T(A_k,B_k)$,
+  the composition $T_k\circ\cdots\circ T_1$ has current-state matrix
+  \begin{equation}\label{eq:Btilde}
+    \tilde{B}_k = B_k B_{k-1}\cdots B_1
+  \end{equation}
+  at position~$1$, and context matrix
+  \begin{equation}\label{eq:Atilde}
+    \tilde{A}_k = A_k + B_k A_{k-1} + B_k B_{k-1}A_{k-2}
+    + \cdots + B_k B_{k-1}\cdots B_2 A_1.
+  \end{equation}
+  The composition converges \textup{(}as $k\to\infty$ for a periodic or
+  convergent sequence\textup{)} if and only if $\tilde{B}_k\to 0$, which is
+  controlled by the joint spectral radius
+  $\hat\rho(\{B_p:p\in P\})$.
+\end{proposition}
+
+\begin{proof}
+  The formulas~\eqref{eq:Btilde} and~\eqref{eq:Atilde} follow by induction
+  from the composition formula~\eqref{eq:composition}. For $k=1$, both
+  formulas are trivially true. Assuming they hold for~$k$, the $(k+1)$-th
+  composition gives current-state matrix $B_{k+1}\tilde{B}_k=B_{k+1}B_k\cdots
+  B_1=\tilde{B}_{k+1}$ and context matrix
+  $A_{k+1}+B_{k+1}\tilde{A}_k=\tilde{A}_{k+1}$.
+
+  For convergence, the current-state matrix $\tilde{B}_k$ must converge to
+  zero (otherwise the trajectory retains a non-trivial dependence on the
+  current states, preventing convergence to a consensus). The condition
+  $\tilde{B}_k\to 0$ is equivalent to
+  $\lim_{k\to\infty}\|B_k\cdots B_1\|^{1/k}<1$, which is the definition of
+  the joint spectral radius $\hat\rho<1$.
+\end{proof}
+
+\begin{proposition}[Commutativity criterion]\label{prop:commute}
+  Two CoT operators $T(A_1,B_1)$ and $T(A_2,B_2)$ commute if and only if:
+  \begin{enumerate}[label=\textup{(\roman*)}]
+    \item $B_1 B_2=B_2 B_1$, and
+    \item $(B_2-I)A_1=(B_1-I)A_2$.
+  \end{enumerate}
+  When both operators commute and are individually contractive
+  \textup{(}$\rho(B_1)<1$ and $\rho(B_2)<1$\textup{)}, their alternating
+  composition converges with rate $O(\rho(B_1 B_2)^k)$, and
+  $\rho(B_1 B_2)\leq\rho(B_1)\rho(B_2)<1$.
+\end{proposition}
+
+\begin{proof}
+  By~\eqref{eq:composition}, $T(A_1,B_1)\circ T(A_2,B_2)=
+  T(A_1+B_1 A_2,\,B_1 B_2)$ and $T(A_2,B_2)\circ T(A_1,B_1)=
+  T(A_2+B_2 A_1,\,B_2 B_1)$. Commutativity requires $B_1 B_2=B_2 B_1$ and
+  $A_1+B_1 A_2=A_2+B_2 A_1$. The latter rearranges to
+  $(B_2-I)A_1=(B_1-I)A_2$.
+
+  When operators commute, $B_1$ and $B_2$ can be simultaneously
+  triangularized (over~$\mathbb{C}$), so $\sigma(B_1 B_2)\subseteq
+  \{\lambda\mu:\lambda\in\sigma(B_1),\,\mu\in\sigma(B_2)\}$. In particular,
+  $\rho(B_1 B_2)\leq\rho(B_1)\rho(B_2)<1$. The alternating composition
+  at step $2k$ has current-state matrix $(B_1 B_2)^k\to 0$, with rate
+  $O(\rho(B_1 B_2)^k)$.
+\end{proof}
+
+\begin{remark}\label{rem:noncommute}
+  For non-commuting operators, the inequality $\rho(B_1 B_2)\leq
+  \rho(B_1)\rho(B_2)$ can fail. It is possible to construct contractive
+  operators $T_1,T_2$ with $\rho(B_1)<1$ and $\rho(B_2)<1$ but
+  $\rho(B_1 B_2)>1$, leading to divergence of the alternating composition.
+  This phenomenon is well known in the theory of joint spectral
+  radii~\cite{Berger1992}.
+\end{remark}

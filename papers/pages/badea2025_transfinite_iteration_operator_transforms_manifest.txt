@@ -1,0 +1,11 @@
+PDF: papers/badea2025_transfinite_iteration_operator_transforms.pdf
+Total pages: 18
+Pages per chunk: 3
+
+Chunks:
+  badea2025_transfinite_iteration_operator_transforms_chunk_001.pdf: pages 1-3
+  badea2025_transfinite_iteration_operator_transforms_chunk_002.pdf: pages 4-6
+  badea2025_transfinite_iteration_operator_transforms_chunk_003.pdf: pages 7-9
+  badea2025_transfinite_iteration_operator_transforms_chunk_004.pdf: pages 10-12
+  badea2025_transfinite_iteration_operator_transforms_chunk_005.pdf: pages 13-15
+  badea2025_transfinite_iteration_operator_transforms_chunk_006.pdf: pages 16-18

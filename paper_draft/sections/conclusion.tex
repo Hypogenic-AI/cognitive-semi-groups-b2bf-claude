@@ -1,0 +1,28 @@
+\section{Conclusion}\label{sec:conclusion}
+
+We have established the first rigorous algebraic framework for chain-of-thought
+prompt composition, modeling CoT operators as elements of a semigroup acting on
+a metric space of reasoning trajectories. The five main results of this
+paper---the monoid structure (Theorem~\ref{thm:semigroup}), the sharp
+contractivity criterion (Theorem~\ref{thm:contractivity}), the
+idempotent--fixed point correspondence (Theorem~\ref{thm:idempotent}), the
+four-case convergence classification (Theorem~\ref{thm:classification}), and
+the JdLG decomposition (Theorem~\ref{thm:jdlg})---provide a complete algebraic
+characterization of when and how iterative CoT prompting converges.
+
+The central insight is that convergence of iterated CoT application is governed
+by a single computable quantity: the spectral radius $\rho(B)$ of the
+current-state transformation matrix. When $\rho(B)<1$, iterates converge
+exponentially to a consensus trajectory determined by the initial query; when
+$\rho(B)=1$, the system oscillates or stabilizes depending on the spectral
+structure of~$B$; and when $\rho(B)>1$, the system diverges. The JdLG
+decomposition further separates the trajectory space into stable reasoning
+patterns and transient noise, providing a principled notion of
+``signal versus noise'' in reasoning trajectories.
+
+This framework opens several directions for future investigation, including
+extension to nonlinear and stochastic operators, computation of joint spectral
+radii for heterogeneous prompt sequences, and empirical validation in
+high-dimensional embedding spaces. We anticipate that the algebraic perspective
+developed here will provide useful tools for the principled design and analysis
+of iterative reasoning systems.

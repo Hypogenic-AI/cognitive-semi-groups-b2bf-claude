@@ -1,0 +1,126 @@
+\section{Preliminaries}\label{sec:prelim}
+
+Throughout this paper, $E$ denotes a Banach space over $\R$ with norm
+$\|\cdot\|_E$. In all concrete examples, $E=\R^d$ for some positive integer
+$d$. For a bounded linear operator $T$ on~$E$, we write $\|T\|$ for the
+operator norm, $\sigma(T)$ for the spectrum, and $\rho(T)=\max\{|\lambda|:
+\lambda\in\sigma(T)\}$ for the spectral radius. We denote by $I$ the identity
+operator on~$E$ and by $0$ the zero operator.
+
+\subsection{Reasoning trajectory spaces}
+
+We model a reasoning process as a finite sequence of states in~$E$, where each
+state represents a $d$-dimensional embedding of a reasoning step.
+
+\begin{definition}[Trajectory space]\label{def:trajectory}
+  Let $n\geq 1$ be a positive integer. The \emph{trajectory space of length~$n$}
+  is $\mathcal{M}_n = E^{n+1}$, equipped with the normalized $\ell^1$ metric
+  \begin{equation}\label{eq:metric}
+    d(\tau,\tau') = \frac{1}{n+1}\sum_{i=0}^{n}\|s_i - s_i'\|_E,
+  \end{equation}
+  where $\tau=(s_0,s_1,\dots,s_n)$ and $\tau'=(s_0',s_1',\dots,s_n')$.
+  An element $\tau\in\mathcal{M}_n$ is called a \emph{reasoning trajectory};
+  $s_0$ is the \emph{initial query} and $(s_1,\dots,s_n)$ are the
+  \emph{reasoning steps}.
+\end{definition}
+
+Since $E$ is complete, the product space $(\mathcal{M}_n,d)$ is a complete
+metric space.
+
+\subsection{CoT operators}
+
+\begin{definition}[Linear CoT operator]\label{def:cot}
+  A \emph{linear CoT operator} $T=T(A,B)$, parameterized by matrices
+  $A,B\in\R^{d\times d}$, acts on trajectories by
+  \begin{equation}\label{eq:cot-action}
+    T(A,B)(s_0,s_1,\dots,s_n) = (s_0,\, As_0+Bs_1,\, As_1+Bs_2,\,
+    \dots,\, As_{n-1}+Bs_n).
+  \end{equation}
+  The matrix $A$ is the \emph{context propagation matrix} and $B$ is the
+  \emph{current-state transformation matrix}.
+\end{definition}
+
+The operator $T(A,B)$ preserves the initial query~$s_0$ and transforms each
+subsequent state $s_i$ ($i\geq 1$) using a linear combination of the previous
+state $s_{i-1}$ (weighted by~$A$) and the current state $s_i$ (weighted
+by~$B$). This captures the essential structure of CoT reasoning: each step
+combines contextual information from the preceding step with a refinement of
+the current reasoning state.
+
+\begin{definition}[Block matrix representation]\label{def:block}
+  The CoT operator $T(A,B)$ on $\mathcal{M}_n$ admits the block matrix
+  representation $M(A,B)\in\R^{(n+1)d\times(n+1)d}$:
+  \begin{equation}\label{eq:block-matrix}
+    M(A,B) =
+    \begin{pmatrix}
+      I & 0 & 0 & \cdots & 0 \\
+      A & B & 0 & \cdots & 0 \\
+      0 & A & B & \cdots & 0 \\
+      \vdots & & \ddots & \ddots & \vdots \\
+      0 & 0 & \cdots & A & B
+    \end{pmatrix},
+  \end{equation}
+  where each entry is a $d\times d$ block.
+\end{definition}
+
+\begin{definition}[Sub-operator spectral radius]\label{def:rho-sub}
+  For a CoT operator $T(A,B)$, the \emph{sub-operator spectral radius} is
+  $\rho_{\mathrm{sub}}(T) = \rho(B)$, the spectral radius of the current-state
+  transformation matrix~$B$.
+\end{definition}
+
+\subsection{Semigroup theory prerequisites}
+
+We recall several classical results that we use in our proofs. For background
+on operator semigroups, we refer to~\cite{Gluck2018} and~\cite{Gerlach2017}.
+
+\begin{definition}[Semigroup and monoid]\label{def:semigroup}
+  A \emph{semigroup} is a non-empty set $S$ equipped with an associative binary
+  operation. A \emph{monoid} is a semigroup with an identity element.
+\end{definition}
+
+\begin{definition}[Semigroup at infinity]\label{def:semigroup-infty}
+  For a bounded operator semigroup $\mathcal{T}=\{T_s\}_{s\in S}$ on a Banach
+  space~$E$, the \emph{semigroup at infinity} is
+  \[
+    \mathcal{T}_\infty = \bigcap_{s\in S}
+    \overline{\{T_t : t\geq s\}}^{\,\SOT},
+  \]
+  the set of all strong operator topology cluster points of the
+  net~$(T_s)$~\cite{Gluck2018}.
+\end{definition}
+
+We use the following classical results without proof.
+
+\begin{theorem}[Banach fixed-point theorem]\label{thm:banach}
+  Let $(X,d)$ be a complete metric space and let $f\colon X\to X$ be a
+  contraction with Lipschitz constant $\alpha<1$. Then $f$ has a unique fixed
+  point $x^*\in X$, and for every $x_0\in X$,
+  $d(f^n(x_0),x^*)\leq\frac{\alpha^n}{1-\alpha}\,d(x_0,f(x_0))$.
+\end{theorem}
+
+\begin{theorem}[JdLG decomposition {\cite{Gluck2018}}]\label{thm:jdlg-prereq}
+  Let $\mathcal{T}$ be a bounded operator semigroup on a Banach space~$E$ such
+  that $\mathcal{T}_\infty$ is non-empty and strongly compact. Then there
+  exists a unique minimal idempotent $P_\infty\in\mathcal{T}_\infty$, and $E$
+  decomposes as
+  \[
+    E = E_{\mathrm{rev}}\oplus E_{\mathrm{s}},
+  \]
+  where $E_{\mathrm{rev}}=\im(P_\infty)$ is the \emph{reversible part} on which
+  $\mathcal{T}_\infty$ acts as a compact topological group, and
+  $E_{\mathrm{s}}=\ker(P_\infty)$ is the \emph{stable part} on which every
+  element of $\mathcal{T}_\infty$ acts as zero.
+\end{theorem}
+
+\begin{theorem}[Mean ergodic theorem]\label{thm:mean-ergodic}
+  Let $T$ be a power-bounded operator on a reflexive Banach space~$E$. Then the
+  Ces\`aro averages $\frac{1}{N}\sum_{k=0}^{N-1}T^k$ converge in the strong
+  operator topology to the projection onto $\ker(I-T)$ along
+  $\overline{\im(I-T)}$.
+\end{theorem}
+
+\begin{theorem}[Gelfand spectral radius formula]\label{thm:gelfand}
+  For any bounded linear operator $T$ on a Banach space,
+  $\rho(T)=\lim_{n\to\infty}\|T^n\|^{1/n}$.
+\end{theorem}
